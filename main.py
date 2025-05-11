@@ -22,12 +22,18 @@ print(" Webhook URL:", webhook_url)
 print(" Access Token:", access_token)
 
 final_sql_query = """
--- Replace the below query with your actual solution after solving the SQL problem
-SELECT doctor_id, COUNT(*) as appointment_count
-FROM Appointments
-GROUP BY doctor_id
-ORDER BY appointment_count DESC
+SELECT 
+    p.AMOUNT AS SALARY,
+    CONCAT(e.FIRST_NAME, ' ', e.LAST_NAME) AS NAME,
+    FLOOR(DATEDIFF('2025-05-11', e.DOB)/365) AS AGE,
+    d.DEPARTMENT_NAME
+FROM PAYMENTS p
+JOIN EMPLOYEE e ON p.EMP_ID = e.EMP_ID
+JOIN DEPARTMENT d ON e.DEPARTMENT = d.DEPARTMENT_ID
+WHERE DAY(p.PAYMENT_TIME) != 1
+ORDER BY p.AMOUNT DESC
 LIMIT 1;
+
 """.strip()
 
 submit_url = "https://bfhldevapigw.healthrx.co.in/hiring/testWebhook/PYTHON"
